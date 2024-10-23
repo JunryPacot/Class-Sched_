@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Schedule</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .header {
+            margin-top: 20px;
+        }
+
+        .time {
+            font-size: 1.5rem;
+        }
+
+        .logos img {
+            width: 40px;
+            height: 50px;
+            animation: rotate 5s infinite linear, glow 2s infinite alternate;
+            margin: 10px;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px red;
+            }
+            25% {
+                box-shadow: 0 0 10px blue;
+            }
+            50% {
+                box-shadow: 0 0 10px green;
+            }
+            75% {
+                box-shadow: 0 0 10px yellow;
+            }
+            100% {
+                box-shadow: 0 0 10px purple;
+            }
+        }
+
+        .typing-animation {
+            font-size: 2rem;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            margin: 0 auto;
+            border-right: 3px solid #00ff00;
+        }
+
+        @keyframes typing {
+            0% {
+                width: 0;
+            }
+            70% {
+                width: 100%;
+            }
+            100% {
+                width: 0;
+            }
+        }
+
+        @keyframes blink {
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: #00ff00;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .typing-animation {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .typing-animation {
+                font-size: 0.79rem;
+            }
+        }
+
+        .schedule-title {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .schedule .day {
+            display: inline-block;
+            padding: 15px;
+            margin: 10px;
+            background-color: #333;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .schedule .day:hover {
+            background-color: #00ff00;
+        }
+
+        .details {
+            margin: 20px;
+            display: none;
+            position: relative;
+        }
+
+        .details-content {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            color: #00ff00;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 13px;
+            right: 3px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            background-color: #ff5555;
+        }
+
+        .made-from img, .deploy-from img, .create-from img {
+            width: 50px;
+            height: 50px;
+            transition: transform 0.6s;
+        }
+
+        .made-from img:hover, .deploy-from img:hover, .create-from img:hover {
+            transform: scale(1.1);
+        }
+
+        .disclaimer {
+            margin: 30px;
+            font-size: 1rem;
+            border-top: 1px solid #00ff00;
+            padding-top: 10px;
+        }
+
+        footer .developer-link {
+            color: blue;
+            text-decoration: none;
+        }
+
+        footer .developer-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header">
+        <div class="time" id="current-time"></div> <!-- Functional time display -->
+        <div class="logos">
+            <!-- Rotating logos with animation -->
+            <img src="asscat(0).png" class="rotate" alt="Logo 1">
+            <img src="1BB.png" class="rotate" alt="Logo 2">
+            <img src="ccis(0).png" class="rotate" alt="Logo 3">
+        </div>
+        <h1 class="typing-animation" id="typing-animation">Agusan Del Sur State College of Agriculture and Technology</h1>
+        <h2 class="schedule-title">BSIT 1B CLASS SCHEDULE</h2> <!-- New line for Class Schedule -->
+    </div>
+
+    <div class="schedule">
+        <!-- Clickable schedule days -->
+        <div class="day" onclick="showSchedule('monday')">Monday</div>
+        <div class="day" onclick="showSchedule('tuesday')">Tuesday</div>
+        <div class="day" onclick="showSchedule('wednesday')">Wednesday</div>
+        <div class="day" onclick="showSchedule('thursday')">Thursday</div>
+        <div class="day" onclick="showSchedule('friday')">Friday</div>
+    </div>
+
+    <div class="details" id="schedule-details">
+        <!-- Placeholder for schedule details -->
+        <div class="details-content" id="details-content">
+            <button class="close-btn" onclick="closeSchedule()">X</button>
+            <p id="schedule-text"></p>
+        </div>
+    </div>
+
+    <div class="made-from">
+        <p>Made from:</p>
+        <img src="html5.png" alt="HTML5">
+        <img src="css3.png" alt="CSS3">
+        <img src="js.png" alt="JavaScript">
+        <img src="github.png" alt="GitHub">
+    </div>
+
+    <div class="deploy-from">
+        <p>Deploy from:</p>
+        <img src="github.png" alt="Deploy Logo">
+    </div>
+
+    <div class="create-from">
+        <p>Create from:</p>
+        <img src="spck.png" alt="VSCode">
+        <img src="github.png" alt="GitHub">
+    </div>
+
+    <div class="disclaimer">
+        <p>This class schedule is created for educational purposes. While we strive for accuracy, please verify any details independently. We are not responsible for any inaccuracies or issues arising from this information.</p>
+    </div>
+
+    <footer>
+        <p>Developed by <a href="https://www.facebook.com/profile.php?id=100075262125552" target="_blank" class="developer-link">Junry Pacot</a></p>
+    </footer>
+
+    <script>
+        // Function to update the current time every second
+        function updateTime() {
+            const timeElement = document.getElementById('current-time');
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 || 12; // Convert 24-hour format to 12-hour format
+
+            timeElement.textContent = `${displayHours}:${minutes}:${seconds} ${ampm}`;
+        }
+
+        // Initial call and repeat every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Call immediately to avoid delay
+
+        // Typing effect for the header
+        const texts = [
+            "Agusan Del Sur State College of Agriculture and Technology",
+            "College of Computing and Information Sciences"
+        ];
+
+        let index = 0;
+        const typingElement = document.getElementById('typing-animation');
+
+        function typeText() {
+            typingElement.textContent = texts[index];
+            typingElement.style.animation = 'typing 6s steps(60, end) infinite, blink .75s step-end infinite';
+            index = (index + 1) % texts.length;
+            setTimeout(() => {
+                typingElement.style.animation = 'none'; // Stop animation before switching text
+                setTimeout(typeText, 2000); // Wait before typing next text
+            }, 6000); // Wait for the typing animation duration
+        }
+
+        // Start typing effect
+        typeText();
+
+        function showSchedule(day) {
+            const scheduleText = document.getElementById('schedule-text');
+            const scheduleDetails = document.getElementById('schedule-details');
+            let schedule = '';
+
+            switch (day) {
+                case 'monday':
+                    schedule = 'Monday: Mr. Ignel B. LEC-CEIT 106 - 8:00 AM - 10:00 AM / Mr. Bry LEC-CEIT (ONLINE CLASS) - 01:00 PM - 02:00 PM / Mr. Lagare LEC-CEIT 105 - 04:00 PM - 05:00 PM';
+                    break;
+                case 'tuesday':
+                    schedule = 'Tuesday: Mr. Glene LEC-CEIT 8:00 AM - 10:00 AM / Mr. Hassan LEC-CEIT GYM 10:00 AM - 12:00 PM / Ms. Nancy LEC-CEIT 209 - 02:30 PM - 04:00 PM';
+                    break;
+                case 'wednesday':
+                    schedule = 'Wednesday: Mr. Bry LEC-CAS 202 - 10:00 AM - 12:00 PM / Mr. Lagare LEC-CEIT 105 - 04:00 PM - 05:00 PM';
+                    break;
+                case 'thursday':
+                    schedule = 'Thursday: Ms. Peñero LAB-TBA 9:00 AM - 12:00 PM / Ms. Nancy LEC-CEIT 208 02:30 PM - 04:00 PM';
+                    break;
+                case 'friday':
+                    schedule = 'Friday: Mr. Ignel LAB-ICT 104 08:00 AM - 11:00 AM / Ms. Peñero LEC-CEIT 207 01:00 PM - 03:00 PM / Mr. Lagare LEC (ONLINE CLASS) 04:00 PM - 05:00 PM';
+                    break;
+            }
+
+            scheduleText.textContent = schedule;
+            scheduleDetails.style.display = 'block';
+        }
+
+        function closeSchedule() {
+            const scheduleDetails = document.getElementById('schedule-details');
+            scheduleDetails.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
